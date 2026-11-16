@@ -300,10 +300,30 @@ page({
       <h2 id="porque-titulo">Um tratamento pensado para si</h2>
     </div>
     <div class="features">
-      <div class="feature reveal">${ICON.hand}<h3>Tratamento personalizado</h3><p>Cada sessão começa por ouvir as suas queixas e objetivos, para escolher as técnicas certas.</p></div>
-      <div class="feature reveal">${ICON.cloud}<h3>Sinta-se nas nuvens</h3><p>Ambiente confortável, com música relaxante e óleos essenciais biológicos.</p></div>
-      <div class="feature reveal">${ICON.leaf}<h3>Material de qualidade</h3><p>Agulhas esterilizadas de uso único, óleos de massagem selecionados e eletroacupuntura para melhores resultados.</p></div>
-      <div class="feature reveal">${ICON.award}<h3>Terapeuta experiente</h3><p>Várias formações certificadas e ${SITE.experiencia} de prática em terapias complementares.</p></div>
+      <div class="feature feature-photo reveal">
+        <figure class="feature-media"><img src="/img/andreia-massagem-costas-600.webp" alt="Andreia Alves a avaliar as costas de um paciente antes da massagem" width="600" height="900" loading="lazy" decoding="async" class="pos-baixo"></figure>
+        <div class="feature-body">${ICON.hand}<h3>Tratamento personalizado</h3><p>Cada sessão começa por ouvir as suas queixas e objetivos, para escolher as técnicas certas.</p></div>
+      </div>
+      <div class="feature feature-photo reveal">
+        <figure class="feature-media"><img src="/img/espaco-relax-1000.webp" alt="Marquesa com toalha macia e flores, à luz de uma vela" width="1000" height="666" loading="lazy" decoding="async"></figure>
+        <div class="feature-body">${ICON.cloud}<h3>Sinta-se nas nuvens</h3><p>Ambiente confortável, com música relaxante e óleos essenciais biológicos.</p></div>
+      </div>
+      <div class="feature feature-photo reveal">
+        <figure class="feature-media"><img src="/img/oleos-essenciais.webp" alt="Frascos de óleos essenciais com ervas e flores" width="800" height="534" loading="lazy" decoding="async"></figure>
+        <div class="feature-body">${ICON.leaf}<h3>Material de qualidade</h3><p>Agulhas esterilizadas de uso único, óleos de massagem selecionados e eletroacupuntura para melhores resultados.</p></div>
+      </div>
+      <div class="feature feature-photo reveal">
+        <div class="feature-media carousel" data-carousel aria-roledescription="carrossel" aria-label="Fotos da Andreia Alves em consulta">
+          ${[
+            ['andreia-retrato', 'Andreia Alves, terapeuta, de bata branca e a sorrir', ''],
+            ['andreia-acupuntura', 'Andreia Alves a aplicar acupuntura nas costas de um paciente', 'pos-baixo'],
+            ['andreia-eletroacupuntura', 'Andreia Alves com o aparelho de eletroacupuntura', 'pos-baixo'],
+            ['andreia-massagem-costas', 'Andreia Alves a preparar uma massagem às costas', ''],
+          ].map(([n, alt, cls], i) => `<figure class="slide${i === 0 ? ' is-active' : ''}" aria-roledescription="diapositivo" aria-label="${i + 1} de 4"${i ? ' aria-hidden="true"' : ''}><img src="/img/${n}-600.webp" alt="${alt}" width="600" height="900" loading="lazy" decoding="async"${cls ? ` class="${cls}"` : ''}></figure>`).join('')}
+          <div class="carousel-dots">${[1, 2, 3, 4].map((n) => `<button type="button" aria-label="Ver foto ${n}"${n === 1 ? ' aria-current="true"' : ''}></button>`).join('')}</div>
+        </div>
+        <div class="feature-body">${ICON.award}<h3>Terapeuta experiente</h3><p>Várias formações certificadas e ${SITE.experiencia} de prática em terapias complementares.</p></div>
+      </div>
     </div>
   </div>
 </section>

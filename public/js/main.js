@@ -37,6 +37,31 @@
     els.forEach((el) => el.classList.add('in'));
   }
 
+  // --- Carrossel de fotos (troca a cada 3,5 s; pára ao passar o rato/foco; respeita "reduzir movimento")
+  document.querySelectorAll('[data-carousel]').forEach((car) => {
+    const slides = [...car.querySelectorAll('.slide')];
+    const dots = [...car.querySelectorAll('.carousel-dots button')];
+    if (slides.length < 2) return;
+    slides.forEach((s) => { const img = s.querySelector('img'); if (img) img.loading = 'eager'; });
+    let i = 0;
+    let timer = null;
+    const show = (n) => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { s.classList.toggle('is-active', k === i); s.setAttribute('aria-hidden', String(k !== i)); });
+      dots.forEach((d, k) => d.setAttribute('aria-current', String(k === i)));
+    };
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = () => { if (!reduce && !timer) timer = setInterval(() => show(i + 1), 3500); };
+    const stop = () => { clearInterval(timer); timer = null; };
+    dots.forEach((d, k) => d.addEventListener('click', () => { show(k); stop(); start(); }));
+    car.addEventListener('mouseenter', stop);
+    car.addEventListener('mouseleave', start);
+    car.addEventListener('focusin', stop);
+    car.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    start();
+  });
+
   // --- Aviso de cookies (só armazenamento essencial)
   const cookie = document.getElementById('cookie');
   const KEY = 'aviso-cookies-visto';
