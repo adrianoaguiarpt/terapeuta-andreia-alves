@@ -5,6 +5,14 @@ const path = require('path');
 const { SITE, ZONAS, TERAPIAS, PACOTES, TESTEMUNHOS, PH } = require('../src/data');
 
 const OUT = path.join(__dirname, '..', 'public');
+// Pré-visualização em alojamento estático (GitHub Pages):
+//   BASE_PATH=/terapeuta-andreia-alves STATIC_HOST=1 npm run build
+// Prefixa os links com o subcaminho, não deixa o Google indexar e o formulário envia por WhatsApp.
+const BASE = (process.env.BASE_PATH || '').replace(/\/$/, '');
+const STATIC = Boolean(process.env.STATIC_HOST);
+const withBase = (html) => !BASE ? html : html
+  .replace(/\b(href|src|action)="\/(?!\/)/g, `$1="${BASE}/`)
+  .replace(/\b(srcset|imagesrcset)="([^"]*)"/g, (m, a, v) => `${a}="${v.replace(/(^|,\s*)\//g, `$1${BASE}/`)}"`);
 const ANO = new Date().getFullYear();
 const HOJE = new Date().toISOString().slice(0, 10);
 const crypto = require('crypto');
@@ -88,10 +96,10 @@ const jsonLd = {
 function head({ title, desc, pathName, extraHead = '' }) {
   const canonical = SITE.url + (pathName === '/' ? '/' : pathName);
   return `<!doctype html>
-<html lang="pt-PT">
+<html lang="pt-PT"${STATIC ? ' data-mode="static"' : ''}>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">${STATIC ? '\n<meta name="robots" content="noindex, nofollow">' : ''}
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${canonical}">
@@ -201,7 +209,7 @@ ${body}
 ${cta ? ctaBand() : ''}
 </main>
 ${footer()}`;
-  fs.writeFileSync(path.join(OUT, file), html);
+  fs.writeFileSync(path.join(OUT, file), withBase(html));
   console.log('✓', file);
 }
 
@@ -577,5 +585,7 @@ fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="U
 ${urls.map((u) => `  <url><loc>${SITE.url}${u}</loc><lastmod>${HOJE}</lastmod><priority>${u === '/' ? '1.0' : u === '/politica-privacidade' ? '0.3' : '0.8'}</priority></url>`).join('\n')}
 </urlset>
 `);
-fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
+fs.writeFileSync(path.join(OUT, 'robots.txt'), STATIC
+  ? 'User-agent: *\nDisallow: /\n' // pré-visualização: fora do Google
+  : `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
 console.log('✓ sitemap.xml, robots.txt');

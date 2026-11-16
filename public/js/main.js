@@ -127,13 +127,31 @@
     status.textContent = '';
     if (!validate()) return;
 
+    // Sem servidor (pré-visualização no GitHub Pages): envia o pedido por WhatsApp
+    if (document.documentElement.dataset.mode === 'static') {
+      const linhas = [
+        'Olá! Gostaria de marcar uma consulta.',
+        `Nome: ${form.nome.value.trim()}`,
+        `Telefone: ${form.telefone.value.trim()}`,
+        form.email.value.trim() && `E-mail: ${form.email.value.trim()}`,
+        `Terapia: ${form.terapia.value}`,
+        `Zona: ${form.zona.value}`,
+        form.data.value && `Data preferida: ${form.data.value.split('-').reverse().join('/')}`,
+        form.mensagem.value.trim() && `Mensagem: ${form.mensagem.value.trim()}`,
+      ].filter(Boolean);
+      window.open(`https://wa.me/351938324438?text=${encodeURIComponent(linhas.join('\n'))}`, '_blank', 'noopener');
+      status.classList.add('ok');
+      status.textContent = 'A abrir o WhatsApp com o seu pedido — basta carregar em enviar.';
+      return;
+    }
+
     btn.disabled = true;
     const original = btn.textContent;
     btn.textContent = 'A enviar…';
     try {
       const data = Object.fromEntries(new FormData(form));
       data.consentimento = form.consentimento.checked;
-      const res = await fetch('/api/contacto', {
+      const res = await fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),

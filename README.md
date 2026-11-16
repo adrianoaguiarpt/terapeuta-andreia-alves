@@ -32,3 +32,11 @@ Copiar `.env.example` para `.env`. Com Gmail: ativar a verificação em 2 passos
 - Build: `npm install && npm run build` · Start: `npm start`
 - Variáveis de ambiente: as de `.env.example`
 - Apontar o domínio e confirmar HTTPS.
+
+## Pré-visualização no GitHub Pages (para a cliente aprovar)
+Cada push no `main` publica uma versão de teste em
+**https://adrianoaguiarpt.github.io/terapeuta-andreia-alves/** (workflow `.github/workflows/pages.yml`).
+
+- É só HTML: sem servidor, o formulário abre o WhatsApp com o pedido preenchido.
+- Tem `noindex` e `robots.txt` bloqueado, para o Google não indexar a pré-visualização.
+- Ativar uma vez: **Settings → Pages → Source: GitHub Actions**.
