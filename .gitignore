@@ -1,3 +1,29 @@
+# Dependências (reinstaláveis com `npm install`)
 node_modules/
+
+# Segredos — NUNCA enviar para o Git
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs e dados de execução
+logs/
+*.log
+npm-debug.log*
+*.pid
+
+# Caches
+.cache/
+.npm/
+.eslintcache
+
+# Sistema operativo
 .DS_Store
+Thumbs.db
+
+# Editores e ferramentas locais
+.vscode/
+.idea/
+.claude/
