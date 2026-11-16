@@ -114,7 +114,7 @@ p { margin: 0 0 1em; }
   .logo-mark { width: 34px; height: 34px; }
   .header-cta { padding: .5em .9em; font-size: .85rem; min-height: 40px; }
 }
-@media (max-width: 380px) { .brand small { display: none; } }
+@media (max-width: 340px) { .brand small { display: none; } }
 @keyframes drop { from { opacity: 0; transform: translateY(-8px); } }
 
 /* ===== Hero ===== */
@@ -359,3 +359,126 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--s
 .carousel-dots button::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: rgb(255 255 255 / .6); box-shadow: 0 0 0 1px rgb(0 0 0 / .15); transition: width .3s var(--ease), background .3s; }
 .carousel-dots button[aria-current="true"]::before { width: 20px; border-radius: 4px; background: #fff; }
 .carousel-dots button:focus-visible { outline-offset: 0; }
+
+/* ===== Foto inteira (sem cortar): nítida por cima, desfocada a preencher a moldura ===== */
+.media-fit { position: relative; overflow: hidden; }
+.media-fit img.bg-blur { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(16px) saturate(1.1) brightness(.92); transform: scale(1.2); }
+.media-fit img.fit { position: relative; width: 100%; height: 100%; object-fit: contain; }
+.feature-photo:hover .media-fit img.fit, .card-photo:hover .media-fit img.fit { transform: none; }
+.swipe-hint { display: none; }
+
+/* =====================================================================
+   TELEMÓVEL (≤ 640px) — a maioria das visitas
+   ===================================================================== */
+@media (max-width: 640px) {
+  body { font-size: 1rem; line-height: 1.6; }
+  h1 { font-size: 2.05rem; line-height: 1.12; }
+  h2 { font-size: 1.7rem; }
+  h3 { font-size: 1.28rem; }
+  .lead { font-size: 1.02rem; }
+  .eyebrow { font-size: .7rem; letter-spacing: .12em; margin-bottom: .6em; }
+
+  /* espaçamento entre secções */
+  .section { padding: 2.75rem 0; }
+  .section-tight { padding-top: 1.5rem; }
+  .sec-head { margin-bottom: 1.5rem; }
+  .page-hero { padding: 2rem 0 1.25rem; }
+  .page-hero .lead { margin-bottom: 0; }
+  .split { gap: 1.5rem; }
+  .split-top { margin-bottom: 1.5rem; }
+
+  /* cabeçalho */
+  .header-in { min-height: 64px; }
+  .brand { gap: .5rem; }
+  .brand small { white-space: nowrap; font-size: .55rem; letter-spacing: .12em; }
+
+  /* hero */
+  .hero { padding: 1.75rem 0 2.5rem; }
+  .hero-in { gap: 1.5rem; }
+  .hero-actions { flex-direction: column; margin: 1.25rem 0 1rem; }
+  .hero-actions .btn { width: 100%; }
+  .hero-media img { aspect-ratio: 4 / 3; border-radius: var(--r); }
+  .hero-media::before { display: none; }
+  .pills { gap: .4rem; margin-top: 1rem; }
+  .pills a { padding: .4rem .8rem; font-size: .85rem; }
+
+  /* caixas "Um tratamento pensado para si": grelha 2×2 compacta */
+  .features { grid-template-columns: 1fr 1fr; gap: .75rem; }
+  .feature-media { aspect-ratio: 1 / 1; }
+  .feature-body { padding: 1rem .85rem 1.1rem; }
+  .feature-body > svg { width: 38px; height: 38px; padding: 9px; margin: -2.2rem 0 .5rem; }
+  .feature-photo h3 { font-size: 1.08rem; margin-bottom: .35em; }
+  .feature-photo p { font-size: .84rem; line-height: 1.5; }
+  .carousel-dots { bottom: 4px; }
+  .carousel-dots button { width: 20px; height: 20px; }
+
+  /* filas deslizantes (terapias e testemunhos da página inicial) */
+  .swipe { display: flex; gap: .85rem; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 calc(var(--gutter) * -1) .5rem; padding: .25rem var(--gutter) .75rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .swipe::-webkit-scrollbar { display: none; }
+  .swipe > * { flex: 0 0 84%; scroll-snap-align: center; margin: 0; }
+  .swipe-hint { display: block; text-align: center; font-size: .8rem; color: var(--muted); margin: 0 0 1.25rem; }
+  .cards-compact { margin-bottom: 0; }
+
+  /* cards de terapias */
+  .cards { gap: 1rem; }
+  .cards:not(.swipe) .card-media { aspect-ratio: 16 / 10; }
+  .card-body { padding: 1.1rem 1.2rem 1.25rem; }
+  .card h3 { font-size: 1.3rem; }
+  .card p { font-size: .95rem; margin-bottom: .75em; }
+  .card-benef { font-size: .88rem !important; }
+  .card-meta { padding-top: .7rem; }
+  .card-price { font-size: 1.3rem; }
+
+  /* tabela de preços sem sair do ecrã */
+  .table-wrap { margin-bottom: 2rem; border-radius: var(--r-sm); }
+  .prices { font-size: .9rem; }
+  .prices th, .prices td { padding: .65rem .7rem; }
+  .prices thead th { font-size: .66rem; letter-spacing: .06em; }
+  .prices td { white-space: nowrap; }
+  .prices tr.group th { font-size: 1.1rem; }
+  .packs { gap: .75rem; }
+  .pack { padding: 1.1rem; }
+
+  /* testemunhos */
+  .quote { padding: 1.25rem; }
+  .quote blockquote { font-size: 1.15rem; }
+  .quote::before { font-size: 4rem; right: 1rem; }
+  .quotes-masonry .quote { margin-bottom: .85rem; }
+
+  /* domicílio, sobre, contactos */
+  .split-media img { border-radius: var(--r); }
+  .split-portrait { max-width: 420px; margin-inline: auto; }
+  .bonus { padding: 1.1rem 1rem .1rem; }
+  .chips li { font-size: .82rem; padding: .3rem .7rem; }
+  .note { font-size: .88rem; padding: .85rem 1rem; }
+  .gallery { gap: .85rem; }
+  .cert { padding: 1rem 1.1rem; }
+  .form, .contact-box { padding: 1.25rem; border-radius: var(--r); }
+  .form h2, .contact-box h2 { font-size: 1.5rem; }
+  .zones { gap: .6rem; grid-template-columns: 1fr 1fr; }
+  .zones li { padding: .8rem .85rem; gap: .5rem; }
+  .zones h3 { font-size: 1.1rem; }
+  .zones p { font-size: .78rem; }
+
+  /* faixa CTA e rodapé */
+  .cta-band { padding: 2.5rem 0; }
+  .cta-in { gap: 1.25rem; }
+  .cta-actions { width: 100%; flex-direction: column; }
+  .cta-actions .btn { width: 100%; }
+  .footer { padding: 2.5rem 0 1.25rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.75rem 1.25rem; }
+  .footer-grid > div:nth-child(1), .footer-grid > div:nth-child(2) { grid-column: 1 / -1; }
+  .footer-bottom { margin-top: 1.75rem; flex-direction: column; }
+
+  /* botão WhatsApp e aviso de cookies mais discretos */
+  .wa-float { width: 52px; height: 52px; right: 14px; bottom: 14px; }
+  .wa-float svg { width: 27px; height: 27px; }
+  .cookie { left: 10px; right: 10px; bottom: 10px; padding: .8rem 1rem; font-size: .82rem; gap: .6rem; }
+  .cookie p { flex-basis: 100%; }
+  body:has(.cookie:not([hidden])) .wa-float { bottom: 150px; }
+}
+@media (max-width: 360px) {
+  .brand small { display: none; }
+  .features { grid-template-columns: 1fr; }
+  .zones { grid-template-columns: 1fr; }
+}

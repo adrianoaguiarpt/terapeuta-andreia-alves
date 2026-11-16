@@ -40,6 +40,7 @@ const ZONAS = [
 const PH = (t) => `<span class="ph">[${t}]</span>`; // placeholder visível
 
 // Cada terapia: nome, grupo, duração, preço (valores de EXEMPLO — confirmar), foto, descrição, benefícios.
+// foto.inteira = true mostra a foto vertical inteira (com fundo desfocado) em vez de a cortar.
 // foto.credito = [autor, link] para fotos com licença CC BY 2.0 (obrigatório manter).
 const TERAPIAS = [
   // --- Massagens
@@ -53,7 +54,7 @@ const TERAPIAS = [
   {
     id: 'tui-na', grupo: 'massagens', nome: 'Massagem Tui Na',
     duracao: '60 min', preco: '45 €',
-    foto: { src: '/img/andreia-massagem-costas-600.webp', alt: 'Andreia Alves a fazer massagem Tui Na nas costas de um paciente', pos: 'baixo' },
+    foto: { src: '/img/andreia-massagem-costas-600.webp', alt: 'Andreia Alves a fazer massagem Tui Na nas costas de um paciente', inteira: true },
     desc: 'Massagem terapêutica da Medicina Tradicional Chinesa que combina pressão, amassamento e mobilização ao longo dos meridianos (canais de energia do corpo).',
     beneficios: 'Alivia dores musculares e articulares e ajuda a reequilibrar o corpo.',
   },
@@ -89,7 +90,7 @@ const TERAPIAS = [
   {
     id: 'acupuntura', grupo: 'mtc', nome: 'Acupuntura',
     duracao: '60 min', preco: '40 €',
-    foto: { src: '/img/andreia-acupuntura-600.webp', alt: 'Andreia Alves a colocar agulhas de acupuntura nas costas de um paciente', pos: 'baixo' },
+    foto: { src: '/img/andreia-acupuntura-600.webp', alt: 'Andreia Alves a colocar agulhas de acupuntura nas costas de um paciente', inteira: true },
     desc: 'Aplicação de agulhas muito finas e esterilizadas, de uso único, em pontos específicos do corpo, segundo a Medicina Tradicional Chinesa.',
     beneficios: 'Indicada para dor crónica, tensão, ansiedade e insónia, entre outras queixas.',
   },
@@ -110,7 +111,7 @@ const TERAPIAS = [
   {
     id: 'eletroacupuntura', grupo: 'mtc', nome: 'Eletroacupuntura',
     duracao: '60 min', preco: '45 €',
-    foto: { src: '/img/andreia-eletroacupuntura-600.webp', alt: 'Andreia Alves com o aparelho de eletroacupuntura', pos: 'baixo' },
+    foto: { src: '/img/andreia-eletroacupuntura-600.webp', alt: 'Andreia Alves com o aparelho de eletroacupuntura', inteira: true },
     desc: 'Acupuntura combinada com uma corrente elétrica muito ligeira entre agulhas, que intensifica o estímulo dos pontos.',
     beneficios: 'Especialmente útil no alívio da dor e na recuperação muscular.',
   },

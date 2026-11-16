@@ -226,13 +226,18 @@ const testemunhosSec = (n = 3, titulo = 'O que dizem os clientes') => `<section 
       <p class="eyebrow">Testemunhos</p>
       <h2 id="test-titulo">${titulo}</h2>
     </div>
-    <div class="quotes">${TESTEMUNHOS.slice(0, n).map(testemunhoCard).join('')}</div>
+    <div class="quotes swipe">${TESTEMUNHOS.slice(0, n).map(testemunhoCard).join('')}</div>
+    <p class="swipe-hint" aria-hidden="true">Deslize para ver mais →</p>
     <p class="center"><a class="link-arrow" href="/testemunhos">Ver todos os testemunhos ${ICON.arrow}</a></p>
   </div>
 </section>`;
 
-const cardFoto = (t) => `<figure class="card-media">
-    <img src="${t.foto.src}" alt="${esc(t.foto.alt)}" width="800" height="600" loading="lazy" decoding="async"${t.foto.pos ? ` class="pos-${t.foto.pos}"` : ''}>
+// Foto inteira: imagem nítida "contain" sobre a mesma imagem desfocada a preencher a moldura
+const fotoInteira = (src, alt, w = 600, h = 900, eager = false) =>
+  `<img class="bg-blur" src="${src}" alt="" aria-hidden="true" width="${w}" height="${h}" ${eager ? '' : 'loading="lazy" '}decoding="async"><img class="fit" src="${src}" alt="${esc(alt)}" width="${w}" height="${h}" ${eager ? '' : 'loading="lazy" '}decoding="async">`;
+
+const cardFoto = (t) => `<figure class="card-media${t.foto.inteira ? ' media-fit' : ''}">
+    ${t.foto.inteira ? fotoInteira(t.foto.src, t.foto.alt) : `<img src="${t.foto.src}" alt="${esc(t.foto.alt)}" width="800" height="600" loading="lazy" decoding="async"${t.foto.pos ? ` class="pos-${t.foto.pos}"` : ''}>`}
   </figure>`;
 
 const terapiaCard = (t) => `<article class="card card-photo reveal" id="${t.id}">
@@ -301,7 +306,7 @@ page({
     </div>
     <div class="features">
       <div class="feature feature-photo reveal">
-        <figure class="feature-media"><img src="/img/andreia-massagem-costas-600.webp" alt="Andreia Alves a avaliar as costas de um paciente antes da massagem" width="600" height="900" loading="lazy" decoding="async" class="pos-baixo"></figure>
+        <figure class="feature-media media-fit">${fotoInteira('/img/andreia-massagem-costas-600.webp', 'Andreia Alves a avaliar as costas de um paciente antes da massagem')}</figure>
         <div class="feature-body">${ICON.hand}<h3>Tratamento personalizado</h3><p>Cada sessão começa por ouvir as suas queixas e objetivos, para escolher as técnicas certas.</p></div>
       </div>
       <div class="feature feature-photo reveal">
@@ -319,7 +324,7 @@ page({
             ['andreia-acupuntura', 'Andreia Alves a aplicar acupuntura nas costas de um paciente', 'pos-baixo'],
             ['andreia-eletroacupuntura', 'Andreia Alves com o aparelho de eletroacupuntura', 'pos-baixo'],
             ['andreia-massagem-costas', 'Andreia Alves a preparar uma massagem às costas', ''],
-          ].map(([n, alt, cls], i) => `<figure class="slide${i === 0 ? ' is-active' : ''}" aria-roledescription="diapositivo" aria-label="${i + 1} de 4"${i ? ' aria-hidden="true"' : ''}><img src="/img/${n}-600.webp" alt="${alt}" width="600" height="900" loading="lazy" decoding="async"${cls ? ` class="${cls}"` : ''}></figure>`).join('')}
+          ].map(([n, alt, cls], i) => `<figure class="slide media-fit${i === 0 ? ' is-active' : ''}" aria-roledescription="diapositivo" aria-label="${i + 1} de 4"${i ? ' aria-hidden="true"' : ''}>${fotoInteira(`/img/${n}-600.webp`, alt)}</figure>`).join('')}
           <div class="carousel-dots">${[1, 2, 3, 4].map((n) => `<button type="button" aria-label="Ver foto ${n}"${n === 1 ? ' aria-current="true"' : ''}></button>`).join('')}</div>
         </div>
         <div class="feature-body">${ICON.award}<h3>Terapeuta experiente</h3><p>Várias formações certificadas e ${SITE.experiencia} de prática em terapias complementares.</p></div>
@@ -335,12 +340,13 @@ page({
       <h2 id="ter-titulo">Massagens e Medicina Tradicional Chinesa</h2>
       <p>Da massagem de relaxamento à acupuntura, terapias naturais para o corpo e para a mente.</p>
     </div>
-    <div class="cards cards-compact">
+    <div class="cards cards-compact swipe">
       ${['terapeutica', 'relaxamento', 'tui-na', 'acupuntura', 'eletroacupuntura', 'reflexologia'].map((id) => {
         const t = TERAPIAS.find((x) => x.id === id);
         return `<a class="card card-link card-photo reveal" href="/terapias#${t.id}">${cardFoto(t)}<div class="card-body"><h3>${t.nome}</h3><p>${t.desc}</p><span class="card-meta"><span>${ICON.clock} ${t.duracao}</span><span class="card-price">${t.preco}</span></span><span class="link-arrow">Saber mais ${ICON.arrow}</span></div></a>`;
       }).join('')}
     </div>
+    <p class="swipe-hint" aria-hidden="true">Deslize para ver mais →</p>
     <p class="center"><a class="btn btn-ghost" href="/terapias">Ver todas as terapias e o preçário</a></p>
   </div>
 </section>
